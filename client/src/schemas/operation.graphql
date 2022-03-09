@@ -1,0 +1,38 @@
+query Customers {
+  customers {
+    id
+    name
+    vip
+    birth_date
+  }
+}
+
+query CustomerOrdersFullPrice($customerId: Int!) {
+  orders_aggregate(where: { customer_id: { _eq: $customerId } }) {
+    aggregate {
+      sum {
+        price
+      }
+    }
+  }
+}
+
+query Orders($customerId: Int!) {
+  customers(where: { id: { _eq: $customerId } }) {
+    name
+    vip
+    birth_date
+  }
+  orders_aggregate(where: { customer_id: { _eq: $customerId } }) {
+    aggregate {
+      sum {
+        price
+      }
+    }
+    nodes {
+      name
+      price
+      date
+    }
+  }
+}

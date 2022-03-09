@@ -1,0 +1,17 @@
+overwrite: true
+hooks:
+  afterAllFileWrite:
+    - prettier --write
+schema:
+  - "${VITE_URI}":
+      headers:
+        x-hasura-admin-secret: "${VITE_ADMIN_SECRET}"
+documents: "./src/**/*.graphql"
+generates:
+  src/generated/graphql.tsx:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
+    config:
+      withHooks: true
